@@ -67,7 +67,85 @@ class GoodsModel extends Model
       $data['goods_desc']=ignoreXSS($_POST['goods_desc']);
       //插入的时间没有生成
       $data['addtime']=date('Y-m-d H:i:s',time());
+  }
+  /*
+   * 实现 分页搜索排序
+   */
+  public function search($perpage=5)
+  {
+      /**************接收搜索条件******************/
+      $gn=I('get.gn');
+      $where=array();//空的where条件
+      if($gn)
+      {
+           $where['goods_name'] =array('like',"%$gn%");
 
+      }
+      $fp=I('get.fp');
+      $tp=I('get.tp');
+      if($fp && $tp )
+      {
+          $where['shop_price']=array('between',array($fp,$tp));
+      }else if($fp)
+      {
+          $where['shop_price']=array('egt',$fp);
+      }else if($tp)
+      {
+          $where['shop_price']=array('elt',$tp);
+      }
+      $ios=I('ios');
+      if($ios)
+      {
+          $where['is_on_sale']=array('eq',$ios);
+      }
+      $fa=I('get.fa');
+      $ta=I('get.ta');
+      if($fa && $ta )
+      {
+          $where['addtime']=array('between',array($fa,$ta));
+      }else if($fa)
+      {
+          $where['addtime']=array('egt',$fa);
+      }else if($ta)
+      {
+          $where['addtime']=array('elt',$ta);
+      }
+      /**************分页功能**********************/
+      $count=$this->where($where)->count();
+      //生成分页类对象
+      $pageObj= new \Think\Page($count,$perpage);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+      $pageObj->setConfig('next', '下一页');
+      $pageObj->setConfig('prev', '上一页');
+      //分页字符串
+      $page=$pageObj->show();
+      /************排序***************/
+        $odby='id';
+        $odway='desc';
+        $oby=I('get.odby');
+        if($oby)
+        {
+            switch($oby)
+            {
+                case 'id_asc';
+                $odway='asc';
+                break;
+                case 'price_desc';
+                $odby='shop_price';
+                break;
+                case 'price_asc';
+                $odby='shop_price';
+                $odway='asc';
+                break;
+            }
+        }
+      /**************取出按要求的数据***********************/
+      $data=$this->where($where)->order("$odby $odway")->limit($pageObj->firstRow.','.$pageObj->listRows)->select();
+
+      /**************返回数据和对应的分页字符串********************/
+      return array(
+          'data'=>$data,//数据
+          'page'=>$page//分页字符串
+      );
   }
 }
 

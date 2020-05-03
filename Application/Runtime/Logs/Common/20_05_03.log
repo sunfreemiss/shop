@@ -4,3 +4,15 @@ INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
 INFO: [ app_init ] --END-- [ RunTime:0.000444s ]
 ERR: 无法加载模块:Favicon
 
+[ 2020-05-03T16:27:33+08:00 ] ::1 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000445s ]
+ERR: 无法加载模块:Favicon
+
+[ 2020-05-03T16:50:30+08:00 ] ::1 /Public/Uploads/Goods/5ead741fc2e92.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001006s ]
+ERR: 无法加载模块:Public
+

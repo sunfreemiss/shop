@@ -31,6 +31,11 @@ class GoodsController extends Controller {
     $this->display();
    }
    public function lst(){
-       echo 'success';
+       //生成商品模型
+       $model=D('goods');
+       //调用模型中的查询方法返回数据和翻页(二维数组)
+       $data=$model->search();
+       $this->assign($data);
+       $this->display();
    }
 }
