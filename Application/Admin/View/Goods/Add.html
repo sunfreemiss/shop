@@ -61,7 +61,7 @@
                 <tr>
                     <td class="label">商品简单描述：</td>
                     <td>
-                        <textarea name="goods_desc" cols="40" rows="3"></textarea>
+                        <textarea name="goods_desc" id='goods_desc'></textarea>
                     </td>
                 </tr>
             </table>
@@ -78,3 +78,11 @@
 版权所有 &copy; 2005-2012 上海商派网络科技有限公司，并保留所有权利。</div>
 </body>
 </html>
+    <link href="__PUBLIC__/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/umeditor/third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/umeditor/lang/zh-cn/zh-cn.js"></script>
+    <script>
+    var um = UM.getEditor('goods_desc');
+    </script>
