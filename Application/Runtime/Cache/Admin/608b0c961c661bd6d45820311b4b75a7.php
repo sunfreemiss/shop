@@ -15,6 +15,7 @@
     <div style="clear:both"></div>
 </h1>
 
+
 <div class="tab-div">
     <div id="tabbar-div">
         <p>
@@ -22,31 +23,32 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form enctype="multipart/form-data" action="/index.php/admin/goods/add" method="post">
+        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/edit" method="post">
+        <input type="hidden" name='id' value='<?php echo I("get.id");?>'/>
             <table width="90%" id="general-table" align="center">
                 <tr>
                     <td class="label">商品名称：</td>
-                    <td><input type="text" name="goods_name" value=""size="30" />
+                    <td><input type="text" name="goods_name" value="<?php echo $data['goods_name'];?>"size="30" />
                     <span class="require-field">*</span></td>
                 </tr>
                 <tr>
                     <td class="label">本店售价：</td>
                     <td>
-                        <input type="text" name="shop_price" value="0" size="20"/>
+                        <input type="text" name="shop_price" value="<?php echo $data['shop_price'];?>" size="20"/>
                         <span class="require-field">*</span>
                     </td>
                 </tr>
                 <tr>
                     <td class="label">是否上架：</td>
                     <td>
-                        <input type="radio" name="is_on_sale" value="是"  checked='checked'/> 是
-                        <input type="radio" name="is_on_sale" value="否"/> 否
+                        <input type="radio" name="is_on_sale" value="是"  <?php echo $data['is_on_sale']=='是'?"checked='checked'":''; ?>/> 是
+                        <input type="radio" name="is_on_sale" value="否" <?php echo $data['is_on_sale']=='否'?"checked='checked'":'';?>/> 否
                     </td>
                 </tr>
                 <tr>
                     <td class="label">市场售价：</td>
                     <td>
-                        <input type="text" name="market_price" value="0" size="20" />
+                        <input type="text" name="market_price" value="<?php echo $data['market_price'];?>" size="20" />
                     </td>
                 </tr>
 
@@ -54,6 +56,7 @@
                   <tr>
                     <td class="label">商品图片：</td>
                     <td>
+                    <img src="/Public/Uploads/<?php echo $data['sm_logo']?>" alt="" />
                         <input type="file" name="logo" size="35" />
                     </td>
                 </tr>
@@ -61,7 +64,9 @@
                 <tr>
                     <td class="label">商品简单描述：</td>
                     <td>
-                        <textarea name="goods_desc" id='goods_desc'></textarea>
+                        <textarea name="goods_desc" id='goods_desc'>
+                        <?php echo $data['goods_desc'];?>
+                        </textarea>
                     </td>
                 </tr>
             </table>
@@ -72,7 +77,6 @@
         </form>
     </div>
 </div>
-
 
     <link href="/Public/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="/Public/umeditor/third-party/jquery.min.js"></script>

@@ -1,18 +1,20 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>ECSHOP 管理中心 - 商品列表 </title>
+<title>ECSHOP 管理中心 - <?php echo $pageTitle;?> </title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="/Public/Admin/Styles/general.css" rel="stylesheet" type="text/css" />
 <link href="/Public/Admin/Styles/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <h1>
-    <span class="action-span"><a href="__GROUP__/Goods/goodsAdd">添加新商品</a></span>
-    <span class="action-span1"><a href="__GROUP__">ECSHOP 管理中心</a></span>
-    <span id="search_id" class="action-span1"> - 商品列表 </span>
+    <span class="action-span"><a href="<?php echo $pageLink;?>"><?php echo $pageButton;?></a>
+    </span>
+    <span class="action-span1"><a href="/index.php/Admin">ECSHOP 管理中心</a></span>
+    <span id="search_id" class="action-span1"> - <?php echo $pageTitle;?> </span>
     <div style="clear:both"></div>
 </h1>
+
 <div class="form-div">
     <form action="/index.php/Admin/Goods/lst" method='GET' >
 		<p>
@@ -32,8 +34,8 @@
 		</p>
 		<p>
 			添加时间:
-			从<input type="text" name='fa' size='30' value='<?php echo I("get.fa");?>'/>
-			到<input type="text" name='ta' size='30' value='<?php echo I("get.ta");?>'/>
+			从<input type="text"  id="fa" name='fa' size='30' value='<?php echo I("get.fa");?>'/>
+			到<input type="text" id='ta' name='ta' size='30' value='<?php echo I("get.ta");?>'/>
 		</p>
 		<?php $obdy=I('get.odby','id_desc');?>
 		<input onclick='this.parentNode.submit();' type="radio" name='odby' value='id_desc' <?php echo I("get.odby")=="id_desc"?'checked="checked"':"" ;?>/>以时间降序
@@ -59,7 +61,7 @@
                 <th>操作</th>
             </tr>
             <?php foreach($data as $v):?>
-            <tr>
+            <tr class="tron">
                 <td align="center"><?php echo $v['id'];?></td>
                 <td align="center" class="first-cell"><span><?php echo $v['goods_name'];?></span></td>
                 <td align="center"><span onclick=""><img src='/Public/Uploads/<?php echo $v["sm_logo"];?>' /></span></td>
@@ -69,8 +71,8 @@
                 <td align="center"><span><?php echo $v['addtime'];?></span></td>
 
                 <td align="center">
-                	<a href="">修改</a>
-                	<a href="">删除</a>
+                	<a href="<?php echo U('edit?id='.$v['id']);?>">修改</a>
+                	<a onclick="return confirm('确定要删除吗?);')" href="<?php echo U('delete?id='.$v['id']);?>">删除</a>
                 </td>
             </tr>
          <?php endforeach;?>
@@ -89,8 +91,22 @@
     </div>
 </form>
 
+<script type="text/javascript" src="/Public/umeditor/third-party/jquery.min.js"></script>
+<link href="/Public/datetimepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="/Public/datetimepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/Public/datetimepicker/datepicker-zh_cn.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="/Public/datetimepicker/time/jquery-ui-timepicker-addon.min.css" />
+<script type="text/javascript" src="/Public/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="/Public/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+<script>
+$.timepicker.setDefaults($.timepicker.regional['zh-CN']);
+$("#fa").datepicker({ dateFormat: "yy-mm-dd" });
+
+$("#ta").datepicker({ dateFormat: "yy-mm-dd" });
+</script>
+<script typr="text/javascript" src="/Public/Admin/Js/tr.js"></script>
 <div id="footer">
-共执行 7 个查询，用时 0.028849 秒，Gzip 已禁用，内存占用 3.219 MB<br />
+共执行 9 个查询，用时 0.025161 秒，Gzip 已禁用，内存占用 3.258 MB<br />
 版权所有 &copy; 2005-2012 上海商派网络科技有限公司，并保留所有权利。</div>
 </body>
 </html>
