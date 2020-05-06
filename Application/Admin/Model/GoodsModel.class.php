@@ -23,49 +23,65 @@ protected  $updateFields='id,goods_name,market_price,shop_price,is_on_sale,goods
         * 2 对图片进行压缩处理
         * 3 将图片上传的地址保存到数据库中即可
         */
-       if($_FILES['logo']['error']==0)
-       {
-            // 说明有图片上传
-            $upload = new \Think\Upload(); // 实例化上传类
-            $upload->maxSize = 1024 * 1024; // 设置附件上传大小
-            $upload->exts = array(
-                'jpg',
-                'gif',
-                'png',
-                'jpeg'
-            ); // 设置附件上传类型
-            $upload->rootPath = './Public/Uploads/'; // 设置附件上传目录
-            $upload->savePath='Goods/';  // 上传文件
-            $info = $upload->upload();
-            if (! $info)
-            {
-                // 上传错误提示错误信息
-                $this->error=$upload->getError();
-                return false;
-            }
+      //上传文件
+     $res=uploadOne('logo','Goods',$thumb=array(
+          array(700, 700),array(350, 350),array(150, 150),array(50, 50)
+      ));
+     if($res['ok']==1)
+     {
+         //说明上传成功 将图片路径保存到数据库中
+         $data['logo'] = $res['images'][0];
+         $data['mbig_logo'] = $res['images'][1];
+         $data['big_logo'] = $res['images'][2];
+         $data['mid_logo'] = $res['images'][3];
+         $data['sm_logo'] = $res['images'][4];
+     }else{
+         $this->error=$res['error'];
+     }
 
-            //开始拼接上传地址
-            $logo=$info['logo']["savepath"].$info['logo']["savename"];
-            $mbiglogo = $info['logo']['savepath'] .'mbig_'. $info['logo']['savename'];
-            $biglogo = $info['logo']['savepath'] .'big_'. $info['logo']['savename'];
-            $midlogo = $info['logo']['savepath'] .'mid_'. $info['logo']['savename'];
-            $smlogo = $info['logo']['savepath'] .'sm_'. $info['logo']['savename'];
-            //对上传的图片进行压缩处理
-            $image = new \Think\Image();
-            $image->open('./Public/Uploads/'.$logo);
-            //拼接不同缩略等级的图片
-            $image->thumb(700, 700)->save('./Public/Uploads/'.$mbiglogo);
-            $image->thumb(350, 350)->save('./Public/Uploads/'.$biglogo);
-            $image->thumb(130, 130)->save('./Public/Uploads/'.$midlogo);
-            $image->thumb(50, 50)->save('./Public/Uploads/'.$smlogo);
-            $image->thumb(150, 150)->save('./thumb.jpg');
+//        if($_FILES['logo']['error']==0)
+//        {
+//             // 说明有图片上传
+//             $upload = new \Think\Upload(); // 实例化上传类
+//             $upload->maxSize = 1024 * 1024; // 设置附件上传大小
+//             $upload->exts = array(
+//                 'jpg',
+//                 'gif',
+//                 'png',
+//                 'jpeg'
+//             ); // 设置附件上传类型
+//             $upload->rootPath = './Public/Uploads/'; // 设置附件上传目录
+//             $upload->savePath='Goods/';  // 上传文件
+//             $info = $upload->upload();
+//             if (! $info)
+//             {
+//                 // 上传错误提示错误信息
+//                 $this->error=$upload->getError();
+//                 return false;
+//             }
 
-            $data['logo'] = $logo;
-            $data['mbig_logo'] = $mbiglogo;
-            $data['big_logo'] = $biglogo;
-            $data['mid_logo'] = $midlogo;
-            $data['sm_logo'] = $smlogo;
-       }
+//             //开始拼接上传地址
+//             $logo=$info['logo']["savepath"].$info['logo']["savename"];
+//             $mbiglogo = $info['logo']['savepath'] .'mbig_'. $info['logo']['savename'];
+//             $biglogo = $info['logo']['savepath'] .'big_'. $info['logo']['savename'];
+//             $midlogo = $info['logo']['savepath'] .'mid_'. $info['logo']['savename'];
+//             $smlogo = $info['logo']['savepath'] .'sm_'. $info['logo']['savename'];
+//             //对上传的图片进行压缩处理
+//             $image = new \Think\Image();
+//             $image->open('./Public/Uploads/'.$logo);
+//             //拼接不同缩略等级的图片
+//             $image->thumb(700, 700)->save('./Public/Uploads/'.$mbiglogo);
+//             $image->thumb(350, 350)->save('./Public/Uploads/'.$biglogo);
+//             $image->thumb(130, 130)->save('./Public/Uploads/'.$midlogo);
+//             $image->thumb(50, 50)->save('./Public/Uploads/'.$smlogo);
+//             $image->thumb(150, 150)->save('./thumb.jpg');
+
+//             $data['logo'] = $logo;
+//             $data['mbig_logo'] = $mbiglogo;
+//             $data['big_logo'] = $biglogo;
+//             $data['mid_logo'] = $midlogo;
+//             $data['sm_logo'] = $smlogo;
+//        }
 
       //商品描述信息在存入数据库时候会将数据进行标签的实体转化导致数据回显到页面的时候显示的是转换之后的原始标签无法实现页面的详细信息展示
       //因此在这里需要对不需要转换的的标签进行忽略操作
@@ -80,61 +96,83 @@ protected  $updateFields='id,goods_name,market_price,shop_price,is_on_sale,goods
        * 2 对图片进行压缩处理
        * 3 将图片上传的地址保存到数据库中即可
        */
-
-      if($_FILES['logo']['error']==0)
+      $res=uploadOne('logo','Goods',$thumb=array(
+          array(700, 700),array(350, 350),array(150, 150),array(50, 50)
+      ));
+      if($res['ok']==1)
       {
-
-          // 说明有图片上传
-          $upload = new \Think\Upload(); // 实例化上传类
-          $upload->maxSize = 1024 * 1024; // 设置附件上传大小
-          $upload->exts = array(
-              'jpg',
-              'gif',
-              'png',
-              'jpeg'
-          ); // 设置附件上传类型
-          $upload->rootPath = './Public/Uploads/'; // 设置附件上传目录
-          $upload->savePath='Goods/';  // 上传文件
-          $info = $upload->upload();
-          if (! $info)
-          {
-              // 上传错误提示错误信息
-              $this->error=$upload->getError();
-              return false;
-          }
-
-          //开始拼接上传地址
-          $logo=$info['logo']["savepath"].$info['logo']["savename"];
-          $mbiglogo = $info['logo']['savepath'] .'mbig_'. $info['logo']['savename'];
-          $biglogo = $info['logo']['savepath'] .'big_'. $info['logo']['savename'];
-          $midlogo = $info['logo']['savepath'] .'mid_'. $info['logo']['savename'];
-          $smlogo = $info['logo']['savepath'] .'sm_'. $info['logo']['savename'];
-          //对上传的图片进行压缩处理
-          $image = new \Think\Image();
-          $image->open('./Public/Uploads/'.$logo);
-          //拼接不同缩略等级的图片
-          $image->thumb(700, 700)->save('./Public/Uploads/'.$mbiglogo);
-          $image->thumb(350, 350)->save('./Public/Uploads/'.$biglogo);
-          $image->thumb(130, 130)->save('./Public/Uploads/'.$midlogo);
-          $image->thumb(50, 50)->save('./Public/Uploads/'.$smlogo);
-          $image->thumb(150, 150)->save('./thumb.jpg');
-
-          $data['logo'] = $logo;
-          $data['mbig_logo'] = $mbiglogo;
-          $data['big_logo'] = $biglogo;
-          $data['mid_logo'] = $midlogo;
-          $data['sm_logo'] = $smlogo;
-          /***********删除原来的图片*************/
-          //获取原始图片的路径
+          //说明上传成功 将图片路径保存到数据库中
+          $data['logo'] = $res['images'][0];
+          $data['mbig_logo'] = $res['images'][1];
+          $data['big_logo'] = $res['images'][2];
+          $data['mid_logo'] = $res['images'][3];
+          $data['sm_logo'] = $res['images'][4];
+          /*************删除原始的图片********************/
           $oldData=$this->field('logo,mbig_logo,big_logo,mid_logo,sm_logo')->find(I('post.id'));
-          //删除原图
-          unlink('./Public/Uploads/'.$oldData['logo']);
-          unlink('./Public/Uploads/'.$oldData['sm_logo']);
-          unlink('./Public/Uploads/'.$oldData['mbig_logo']);
-          unlink('./Public/Uploads/'.$oldData['big_logo']);
-          unlink('./Public/Uploads/'.$oldData['mid_logo']);
+
+          $ic=C('IMAGE_CONFIG')['rootPath'];
+          foreach ($oldData as $v)
+          {
+              unlink($ic.$v);
+          }
+      }else{
+          $this->error=$res['error'];
       }
 
+//       if($_FILES['logo']['error']==0)
+//       {
+
+//           // 说明有图片上传
+//           $upload = new \Think\Upload(); // 实例化上传类
+//           $upload->maxSize = 1024 * 1024; // 设置附件上传大小
+//           $upload->exts = array(
+//               'jpg',
+//               'gif',
+//               'png',
+//               'jpeg'
+//           ); // 设置附件上传类型
+//           $upload->rootPath = './Public/Uploads/'; // 设置附件上传目录
+//           $upload->savePath='Goods/';  // 上传文件
+//           $info = $upload->upload();
+//           if (! $info)
+//           {
+//               // 上传错误提示错误信息
+//               $this->error=$upload->getError();
+//               return false;
+//           }
+
+//           //开始拼接上传地址
+//           $logo=$info['logo']["savepath"].$info['logo']["savename"];
+//           $mbiglogo = $info['logo']['savepath'] .'mbig_'. $info['logo']['savename'];
+//           $biglogo = $info['logo']['savepath'] .'big_'. $info['logo']['savename'];
+//           $midlogo = $info['logo']['savepath'] .'mid_'. $info['logo']['savename'];
+//           $smlogo = $info['logo']['savepath'] .'sm_'. $info['logo']['savename'];
+//           //对上传的图片进行压缩处理
+//           $image = new \Think\Image();
+//           $image->open('./Public/Uploads/'.$logo);
+//           //拼接不同缩略等级的图片
+//           $image->thumb(700, 700)->save('./Public/Uploads/'.$mbiglogo);
+//           $image->thumb(350, 350)->save('./Public/Uploads/'.$biglogo);
+//           $image->thumb(130, 130)->save('./Public/Uploads/'.$midlogo);
+//           $image->thumb(50, 50)->save('./Public/Uploads/'.$smlogo);
+//           $image->thumb(150, 150)->save('./thumb.jpg');
+
+//           $data['logo'] = $logo;
+//           $data['mbig_logo'] = $mbiglogo;
+//           $data['big_logo'] = $biglogo;
+//           $data['mid_logo'] = $midlogo;
+//           $data['sm_logo'] = $smlogo;
+          /***********删除原来的图片*************/
+//           //获取原始图片的路径
+//           $oldData=$this->field('logo,mbig_logo,big_logo,mid_logo,sm_logo')->find(I('post.id'));
+//           //删除原图
+//           unlink('./Public/Uploads/'.$oldData['logo']);
+//           unlink('./Public/Uploads/'.$oldData['sm_logo']);
+//           unlink('./Public/Uploads/'.$oldData['mbig_logo']);
+//           unlink('./Public/Uploads/'.$oldData['big_logo']);
+//           unlink('./Public/Uploads/'.$oldData['mid_logo']);
+
+//   }
       //商品描述信息在存入数据库时候会将数据进行标签的实体转化导致数据回显到页面的时候显示的是转换之后的原始标签无法实现页面的详细信息展示
       //因此在这里需要对不需要转换的的标签进行忽略操作
       $data['goods_desc']=ignoreXSS($_POST['goods_desc']);
@@ -146,13 +184,13 @@ protected  $updateFields='id,goods_name,market_price,shop_price,is_on_sale,goods
   public function _before_delete($options)
   {
       $id=$options['where']['id'];
-      $oldData=$this->field('logo,mbig_logo,big_logo,mid_logo,sm_logo')->find($id);
-      //删除原图
-      unlink('./Public/Uploads/'.$oldData['logo']);
-      unlink('./Public/Uploads/'.$oldData['sm_logo']);
-      unlink('./Public/Uploads/'.$oldData['mbig_logo']);
-      unlink('./Public/Uploads/'.$oldData['big_logo']);
-      unlink('./Public/Uploads/'.$oldData['mid_logo']);
+   $oldData=$this->field('logo,mbig_logo,big_logo,mid_logo,sm_logo')->find($id);
+
+          $ic=C('IMAGE_CONFIG')['rootPath'];
+          foreach ($oldData as $v)
+          {
+              unlink($ic.$v);
+          }
   }
   /*
    * 实现 分页搜索排序

@@ -40,7 +40,7 @@
                   <tr>
                     <td class="label">商品图片：</td>
                     <td>
-                    <img src="__PUBLIC__/Uploads/<?php echo $data['sm_logo']?>" alt="" />
+                    <?php showImage($data['sm_logo']);?>
                         <input type="file" name="logo" size="35" />
                     </td>
                 </tr>

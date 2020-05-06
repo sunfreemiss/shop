@@ -64,7 +64,7 @@
             <tr class="tron">
                 <td align="center"><?php echo $v['id'];?></td>
                 <td align="center" class="first-cell"><span><?php echo $v['goods_name'];?></span></td>
-                <td align="center"><span onclick=""><img src='/Public/Uploads/<?php echo $v["sm_logo"];?>' /></span></td>
+                <td align="center"><span onclick=""><?php showImage($v["sm_logo"]);?></span></td>
                 <td align="center"><span><?php echo $v['market_price'];?></span></td>
                 <td align="center"><span><?php echo $v['shop_price'];?></span></td>
                 <td align="center"><span><?php echo $v['is_on_sale'];?></span></td>
@@ -106,7 +106,7 @@ $("#ta").datepicker({ dateFormat: "yy-mm-dd" });
 </script>
 <script typr="text/javascript" src="/Public/Admin/Js/tr.js"></script>
 <div id="footer">
-共执行 9 个查询，用时 0.025161 秒，Gzip 已禁用，内存占用 3.258 MB<br />
-版权所有 &copy; 2005-2012 上海商派网络科技有限公司，并保留所有权利。</div>
+
+版权所有 &copy; 志学网络公司权限所有</div>
 </body>
 </html>

@@ -23,7 +23,7 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/edit" method="post">
+        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/edit/id/25.html" method="post">
         <input type="hidden" name='id' value='<?php echo I("get.id");?>'/>
             <table width="90%" id="general-table" align="center">
                 <tr>
@@ -56,7 +56,7 @@
                   <tr>
                     <td class="label">商品图片：</td>
                     <td>
-                    <img src="/Public/Uploads/<?php echo $data['sm_logo']?>" alt="" />
+                    <?php showImage($data['sm_logo']);?>
                         <input type="file" name="logo" size="35" />
                     </td>
                 </tr>
